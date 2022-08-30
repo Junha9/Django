@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1> dtl </h1>
+  <p>{{name}}은 {{age}}야!</p>
+  <p>{{name | lower | truncatewords:3}}은 {{age}}야!</p>
+  <p>최고의 음식은?
+    <ol>1. {{foods.0}}</ol>
+    <ol>2. {{foods.1}}</ol>
+    <ol>3. {{foods.2}}</ol>
+  </p>
+  <p>
+    {% for food in foods %}
+    <p>{{food}}</p>
+    {% endfor %}
+  </p>
+</body>
+</html>

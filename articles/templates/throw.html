@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+
+{% block content%}
+  <form action="{% url 'catch' %}" method='GET'>
+    <label for='search'> search: </label>
+    <input type='text' name='search' id = 'search'>
+    <input type='submit'>
+  </form>
+
+  <form action='https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8'>
+    <input type='text' name='query'>
+    <input type='submit'>
+  </form>
+{% endblock content%}
