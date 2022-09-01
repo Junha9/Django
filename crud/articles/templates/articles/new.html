@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1> Write a new article </h1>
+  <a href="{% url 'articles:index' %}"> back to the previous page </a>
+  <form action="{% url 'articles:create' %}" method="POST">
+    {% csrf_token %}
+    <div class="row text-center">
+      <label for="title" class="col-1 col-form-label"> Title: </label>
+      <input type="text" name="title" id="title" class="col-3">
+    </div>
+    <br>
+    <div class="row text-center">
+      <label for="content" class="col-1 col-form-label"> Content: </label>
+      <input type="text" name="content" id="content" class="col-3">
+    </div>
+    <br>
+    <div class="row">
+      <p class="col-1"></p>
+      <input type="submit" class="col-1">
+    </div>
+  </form>
+{% endblock content %}
