@@ -79,3 +79,20 @@ CREATE TABLE classmates (
   age INTEGER NOT NULL,
   address TEXT NOT NULL
 );
+
+INSERT INTO classmates (name, age, address)
+VALUES
+  ('주나박', 29, '아이고배야'),
+  ('다이소', 33, '장난이얌');
+
+UPDATE classmates
+SET name= '김철수한무두루미',
+  address= '제주도'
+WHERE rowid = 2;
+
+DELETE FROM classmates WHERE rowid=3;
+
+SELECT rowid, * FROM classmates;
+
+DELETE FROM classmates
+WHERE name LIKE '%한%';

@@ -12,6 +12,7 @@
   <a href="{% url 'articles:detail' article.pk %}">
     {% comment %} <p>글 번호: {{ article.pk }} </p> {% endcomment %}
   
+  <p> Author : {{article.user}} </p>
   <p> Title: {{ article }}</p>
   </a>
   <p> Content: {{ article.content }}</p>

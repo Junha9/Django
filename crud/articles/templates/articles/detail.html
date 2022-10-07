@@ -4,13 +4,45 @@
   <h2> DETAIL </h2>
   <h3> article NO.{{ article.pk}} </h3>
   <hr>
+  <p><b> Author: {{ article.user }}</b></p>
   <p> {{article}} </p>
   <p> content: {{article.content }}</p>
   <hr>
   <a href="{% url 'articles:index' %}">[back]</a>
-  <a href="{% url 'articles:update' article.pk %}"> EDIT </a> <br>
-  <form action="{% url 'articles:delete' article.pk %}" method='POST'>
+  {% if request.user == article.user %}
+    <a href="{% url 'articles:update' article.pk %}"> EDIT </a> <br>
+    <form action="{% url 'articles:delete' article.pk %}" method='POST'>
+      {% csrf_token %}
+      <input type="submit" value="DELETE">
+    </form>
+  {% endif %}
+  <hr>
+  <h4> comments </h4>
+  {% if comments  %}
+    <p><b>There are {{ comments|length }} comments</b></p>
+  {% endif %}
+  <ul>
+    {% for comment in comments %}
+    <li> {{comment.user}} - {{ comment.content }} 
+      {% if comment.user == request.user %}
+      <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="DELETE">
+      </form>
+      {% endif %}
+    </li>
+    {% empty %}
+      <p>There's no comment</p>
+    {% endfor %}
+  </ul>
+  <hr>
+  {% if request.user.is_authenticated %}
+  <form action="{% url 'articles:comments_create' article.pk %}" method="POST">
     {% csrf_token %}
-    <input type="submit" value="DELETE">
+    {{ comment_form }}
+    <input type="submit">
   </form>
+  {% else %}
+    <a href="{% url 'accounts:login' %}"> Log in to write a comment </a>
+  {% endif %}
 {% endblock content %}
