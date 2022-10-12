@@ -16,10 +16,19 @@
   <hr>
   <a href="{% url 'articles:detail' article.pk %}">
     {% comment %} <p>글 번호: {{ article.pk }} </p> {% endcomment %}
-  
-  <p> Author : {{article.user}} </p>
   <p> Title: {{ article }}</p>
   </a>
+  <p> <b>Author : <a href="{% url 'accounts:profile' article.user.username %}"> {{article.user}} </a></b></p>
   <p> Content: {{ article.content }}</p>
+  <div>
+    <form action="{% url 'articles:likes' article.pk %}" method="POST">
+      {% csrf_token %}
+      {% if request.user in article.like_users.all %}
+        <input type="submit" value="Unlike">
+      {% else %}
+        <input type="submit" value="Like">
+      {% endif %}
+    </form>
+  </div>
   {% endfor %}
 {% endblock content %}

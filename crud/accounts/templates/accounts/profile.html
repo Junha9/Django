@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1> {{ person.username }}'s Profile </h1>
+  <div>
+    Followings: {{ person.followings.all | length }} / Followers : {{ person.followers.all | length }}
+  </div>
+  {% if request.user != person %}
+  <div>
+    <form action="{% url 'accounts:follow' person.pk %}" method="POST">
+      {% csrf_token %}
+      {% if request.user in person.followers.all %}
+        <input type="submit" value="Unfollow">
+      {% else %}
+        <input type="submit" value = "follow">
+      {% endif %}
+    </form>
+  </div>
+  {% endif %}
+  <hr>
+
+  <h2> {{ person.username }} 's articles </h2>
+  {% for article in person.article_set.all %}
+    <div> {{article.title }} </div>
+    {% endfor %}
+
+    <hr>
+    <h2> {{person.username }}'s comments </h2>
+    {% for comment in person.comment_set.all %}
+      <div> {{ comment.content }} </div>
+    {% endfor %}
+
+    <hr>
+
+    <h2> Articles that {{ person.username }} liked </h2>
+    {% for article in person.like_articles.all %}
+      <dir> {{ article.title }} </dir>
+    {% endfor %}
+{% endblock content %}

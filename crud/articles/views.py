@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
+from django.contrib.auth import get_user_model
 # Create your views here.
 
 def index(request):
@@ -74,13 +75,11 @@ def update(request, pk):
     # article.content = request.POST.get('content')
     # article.save()
     # return render(request, 'articles/create.html')
-<<<<<<< HEAD
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
             form.save()
             return redirect('articles:detail', article.pk)
-=======
     if request.user == article.user:
         if request.method == 'POST':
             form = ArticleForm(request.POST, instance=article)
@@ -89,7 +88,6 @@ def update(request, pk):
                 return redirect('articles:detail', article.pk)
         else:
             form = ArticleForm(instance=article)
->>>>>>> f79b33047728bd9951840602aae69fce7f1a4e77
     else:
         return redirect('articles:index')
     context = {
@@ -114,3 +112,15 @@ def comments_delete(request, article_pk, comment_pk):
     if request.user == comment.user:
         comment.delete()
     return redirect('articles:detail', article_pk)
+
+def likes(request, article_pk):
+    if request.user.is_authenticated:
+        article = Article.objects.get(pk=article_pk)
+
+        if article.like_users.filter(pk=request.user.pk).exists():
+            article.like_users.remove(request.user)
+        else:
+            article.like_users.add(request.user)
+        return redirect('articles:index')
+    return redirect('accounts:login')
+
