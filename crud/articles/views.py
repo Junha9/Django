@@ -25,7 +25,7 @@ def create(request):
     # article.save()
     # return render(request, 'articles/create.html')
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
+        form = ArticleForm(request.POST, request.FILES)
         if form.is_valid():
             article = form.save()
             return redirect('articles:detail', article.pk)
@@ -68,7 +68,7 @@ def update(request, pk):
     # article.save()
     # return render(request, 'articles/create.html')
     if request.method == 'POST':
-        form = ArticleForm(request.POST, instance=article)
+        form = ArticleForm(request.POST, request.FILES, instance=article)
         if form.is_valid():
             form.save()
             return redirect('articles:detail', article.pk)

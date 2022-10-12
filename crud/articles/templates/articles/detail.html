@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  {% if article.image %}
+    <img src="{{ article.image.url }}" alt="{{ article.image }}">
+    <img src="{{ article.image_thumbnail.url }}" alt="{{ article.image_thumbnail }}">
+  {% endif %}
   <h2> DETAIL </h2>
   <h3> article NO.{{ article.pk}} </h3>
   <hr>
