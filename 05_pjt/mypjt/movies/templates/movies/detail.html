@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1> DETAIL </h1>
+  <img src="{{movie.poster_url}}" alt="missing">
+  <h3> {{ movie.title }} </h3>
+  <br>
+  <h4> Audience : {{ movie.audience }} </h4>
+  <br>
+  <h4> Release date : {{ movie.release_date }} </h4>
+  <br>
+  <h4> Genre : {{ movie.genre }} </h4>
+  <br>
+  <h4> Score : {{ movie.score }} </h4>
+  <br>
+  <p> {{ movie.description }} </p>
+  <br>
+  <form action="{% url 'movies:update' movie.pk %}">
+    <input type="submit" value="update">
+  </form>
+  <form action="{% url 'movies:delete' movie.pk %}">
+    <input type="submit" value="delete">
+  </form>
+{% endblock content %}
